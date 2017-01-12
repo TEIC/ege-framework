@@ -244,6 +244,7 @@ public class DataBuffer
 			}
 		}
 		items = new HashMap<String,Item>();
+		tracker.exitWhenFinished();
 	}
 	
 	public String getTemporaryDir(){
