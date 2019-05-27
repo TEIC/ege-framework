@@ -44,11 +44,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
-import pl.psnc.dl.ege.component.ConfigurableConverter;
-import pl.psnc.dl.ege.component.Converter;
-import pl.psnc.dl.ege.component.NamedConverter;
-import pl.psnc.dl.ege.component.Recognizer;
-import pl.psnc.dl.ege.component.Validator;
+import pl.psnc.dl.ege.component.*;
 import pl.psnc.dl.ege.exception.EGEException;
 import pl.psnc.dl.ege.utils.EGEIOUtils;
 import pl.psnc.dl.ege.utils.IOResolver;
@@ -345,6 +341,31 @@ public class EGEConfigurationManager
 			}
 			catch (ClassCastException ex) {
 				LOGGER.debug("Provided class is not a Validator", ex);
+				continue;
+			}
+		}
+		return plugins;
+
+	}
+
+	/**
+	 * Returns list of all available customizations.
+	 *
+	 * @return list of customizations.
+	 */
+	public List<Customization> getAvailableCustomizations()
+	{
+		List<Customization> plugins = new ArrayList<Customization>();
+
+		ExtensionPoint ep = pluginManager.getRegistry().getExtensionPoint(
+				EXTENSION_POINT_ID, "Customization");
+		List<PluginWrapper> plugs = getAllComponents(ep);
+		for (PluginWrapper e : plugs) {
+			try {
+				plugins.add((Customization) e.getPlugin());
+			}
+			catch (ClassCastException ex) {
+				LOGGER.debug("Provided class is not a Customization", ex);
 				continue;
 			}
 		}

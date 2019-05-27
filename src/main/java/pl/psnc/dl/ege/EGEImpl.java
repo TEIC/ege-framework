@@ -22,19 +22,13 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import pl.psnc.dl.ege.component.Converter;
+import pl.psnc.dl.ege.component.Customization;
 import pl.psnc.dl.ege.component.Recognizer;
 import pl.psnc.dl.ege.component.Validator;
 import pl.psnc.dl.ege.configuration.EGEConfigurationManager;
 import pl.psnc.dl.ege.configuration.EGEConstants;
-import pl.psnc.dl.ege.exception.ConverterException;
-import pl.psnc.dl.ege.exception.EGEException;
-import pl.psnc.dl.ege.exception.RecognizerException;
-import pl.psnc.dl.ege.exception.ValidatorException;
-import pl.psnc.dl.ege.types.ConversionAction;
-import pl.psnc.dl.ege.types.ConversionActionArguments;
-import pl.psnc.dl.ege.types.ConversionsPath;
-import pl.psnc.dl.ege.types.DataType;
-import pl.psnc.dl.ege.types.ValidationResult;
+import pl.psnc.dl.ege.exception.*;
+import pl.psnc.dl.ege.types.*;
 import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import edu.uci.ics.jung.graph.Graph;
 
@@ -97,6 +91,11 @@ public class EGEImpl
 	private List<Converter> converters;
 
 	/*
+	 * List of available converter plugins : loaded through extension manager.
+	 */
+	private List<Customization> customizations;
+
+	/*
 	 * Directed graph of connections between available converter plugins.
 	 */
 	private final Graph<ConversionAction, Integer> graph = new DirectedSparseMultigraph<ConversionAction, Integer>();
@@ -120,6 +119,7 @@ public class EGEImpl
 		this.converters = em.getAvailableConverters();
 		this.validators = em.getAvailableValidators();
 		this.recognizers = em.getAvailableRecognizers();
+		this.customizations = em.getAvailableCustomizations();
 		int size = converters.size();
 		Set<ConversionAction> nodes = new HashSet<ConversionAction>();
 		for (int i = 0; i < size; i++) {
@@ -228,8 +228,36 @@ public class EGEImpl
 		}
 		throw new ValidatorException(inputDataType);
 	}
-	
-	
+
+	/**
+	 * <p>Method performs customization using all loaded through extension mechanism
+	 * {@link Customization} implementations.</p>
+	 * If there is no customization that supports specified data type, then
+	 * CustomizationException will be throw.<br/>
+	 * If some unexpected errors occurs during customization, method will throw
+	 * EGEException.
+	 *
+	 * @param inputData
+	 *            input stream that contains necessary data
+	 * @param customizationSetting
+	 *            customization argument
+	 * @throws IOException
+	 * @throws {@link CustomizationException}
+	 * @throws {@link EGEException}
+	 */
+	public void performCustomization(final InputStream inputData,
+											  final CustomizationSetting customizationSetting)
+			throws IOException, CustomizationException, EGEException
+	{
+		for (Customization c : customizations) {
+			for (CustomizationSetting cs : c.getSupportedCustomizationSettings()) {
+				if (cs.equals(customizationSetting)) {
+					c.customize(inputData, customizationSetting);
+				}
+			}
+		}
+		throw new CustomizationException(customizationSetting);
+	}
 
 	/**
 	 * Method performs recognition of the MIME type of an input data. If any of
@@ -360,6 +388,19 @@ public class EGEImpl
 		Set<DataType> supported = new TreeSet<DataType>();
 		for(Validator v : validators){
 			supported.addAll(v.getSupportedValidationTypes());
+		}
+		return supported;
+	}
+
+	/**
+	 * <p>Returns set of data types that are supported for customization.</p>
+	 *
+	 * @return set of data types
+	 */
+	public Set<CustomizationSetting> returnSupportedCustomizationSettings(){
+		Set<CustomizationSetting> supported = new TreeSet<CustomizationSetting>();
+		for(Customization c : customizations){
+			supported.addAll(c.getSupportedCustomizationSettings());
 		}
 		return supported;
 	}

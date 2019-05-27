@@ -32,4 +32,9 @@
 		<parameter-def id="name"/>
 		<parameter-def id="description" multiplicity="none-or-one"/>
 	</extension-point>
+	<extension-point id="Customization">
+		<parameter-def id="class"/>
+		<parameter-def id="name"/>
+		<parameter-def id="description" multiplicity="none-or-one"/>
+	</extension-point>
 </plugin>
