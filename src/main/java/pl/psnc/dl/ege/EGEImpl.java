@@ -232,31 +232,55 @@ public class EGEImpl
 	/**
 	 * <p>Method performs customization using all loaded through extension mechanism
 	 * {@link Customization} implementations.</p>
-	 * If there is no customization that supports specified data type, then
+	 * If there is no customization that supports specified customization request, then
 	 * CustomizationException will be throw.<br/>
 	 * If some unexpected errors occurs during customization, method will throw
 	 * EGEException.
 	 *
-	 * @param inputData
-	 *            input stream that contains necessary data
 	 * @param customizationSetting
-	 *            customization argument
+	 *            customization setting
+	 * @param sourceInputType
+	 * 			  source
+	 * @param customizationInputType
+	 *            customization
+	 * @param outputFormat
+	 *            outputFormat
+	 * @param outputStream
+	 *            outputStream
 	 * @throws IOException
 	 * @throws {@link CustomizationException}
 	 * @throws {@link EGEException}
 	 */
-	public void performCustomization(final InputStream inputData,
-											  final CustomizationSetting customizationSetting)
-			throws IOException, CustomizationException, EGEException
+	public void performCustomization(final CustomizationSetting customizationSetting,
+									 final CustomizationSourceInputType sourceInputType,
+									 final CustomizationSourceInputType customizationInputType,
+									 final String outputFormat, final OutputStream outputStream,
+									 final File localSourceFile, final File localCustomizationFile)
+			throws IOException, EGEException
 	{
-		for (Customization c : customizations) {
-			for (CustomizationSetting cs : c.getSupportedCustomizationSettings()) {
-				if (cs.equals(customizationSetting)) {
-					c.customize(inputData, customizationSetting);
+		try {
+
+			for (Customization c : customizations) {
+				for (CustomizationSetting cs : c.getSupportedCustomizationSettings()) {
+					if (cs.equals(customizationSetting)) {
+						c.customize(customizationSetting, sourceInputType, customizationInputType,
+								outputFormat, outputStream, localSourceFile, localCustomizationFile);
+					}
 				}
 			}
 		}
-		throw new CustomizationException(customizationSetting);
+		catch (CustomizationException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+			throw ex;
+		}
+		catch (IOException ex) {
+			LOGGER.error(ex.getMessage(), ex);
+			throw ex;
+		}
+		catch (Exception ex) {
+			LOGGER.error(ex.getMessage(), ex);
+			throw new EGEException(ex.getMessage());
+		}
 	}
 
 	/**

@@ -388,7 +388,8 @@ public class EGEConfigurationManager
 		List<Extension> extensions = new ArrayList(ep.getConnectedExtensions());		
 		if(ep.getId().equals("XslConverter")) {
 			// search for all plugin.xml files in stylesheets and add the extensions
-			getXslExtensions(extensions, ep);
+			if(extensions.size() > 0)
+				getXslExtensions(extensions, ep);
 		}
 		for (Iterator iter = extensions.iterator(); iter.hasNext();) {
 			Extension element = (Extension) iter.next();
