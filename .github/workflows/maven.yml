@@ -33,4 +33,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ege-framework-0.4.jar
-        path: /home/runner/work/ege-api/ege-api/target/ege-framework-0.4.jar
+        path: /home/runner/work/ege-framework/ege-framework/target/ege-framework-0.4.jar
