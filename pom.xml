@@ -14,7 +14,8 @@
     <project.reporting.outputEncoding>
       UTF-8
     </project.reporting.outputEncoding>
-
+  	<maven.compiler.source>1.8</maven.compiler.source>
+ 	<maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
 
@@ -96,15 +97,15 @@
   </developers>
   <reporting>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-	<version>2.3.2</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.2</version>
+            <configuration>
+                <source>1.8</source>
+                <target>1.8</target>
+            </configuration>
+        </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jxr-plugin</artifactId><version>2.3</version>
@@ -218,10 +219,27 @@
       <scope>compile</scope>
     </dependency>
   </dependencies>
+   <repositories>
+		<repository>
+			<id>central</id>
+			<name>central</name>
+			<url>https://repo.maven.apache.org/maven2/</url>
+		</repository>
+		<repository>
+			<id>edirom</id>
+			<name>Edirom</name>
+			<url>https://maven.pkg.github.com/Edirom/*</url>
+		</repository>
+                <repository>
+			<id>teic</id>
+			<name>TEIC</name>
+			<url>https://maven.pkg.github.com/TEIC/*</url>
+		</repository>
+	</repositories>   
 <distributionManagement>
    <repository>
      <id>github</id>
-     <name>GitHub anneferger Apache Maven Packages</name>
+     <name>GitHub TEIC Apache Maven Packages</name>
      <url>https://maven.pkg.github.com/teic/ege-framework</url>
    </repository>
 </distributionManagement>
