@@ -2,6 +2,7 @@ package pl.psnc.dl.ege.configuration;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -403,7 +404,7 @@ public class EGEConfigurationManager
 				Class mf = classLoader.loadClass(element.getParameter("class")
 						.valueAsString());
 
-				Object plugin = mf.newInstance();
+				Object plugin = mf.getDeclaredConstructor().newInstance();
 
 				PluginWrapper pw = new PluginWrapper(plugin, element
 						.getParameters());
@@ -427,6 +428,12 @@ public class EGEConfigurationManager
 			}
 			catch (PluginLifecycleException e) {
 				LOGGER.debug("PluginLifecycleException", e);
+				continue;
+			} catch (InvocationTargetException e) {
+				LOGGER.debug("InvocationTargetException", e);
+				continue;
+			} catch (NoSuchMethodException e) {
+				LOGGER.debug("NoSuchMethodException", e);
 				continue;
 			}
 
