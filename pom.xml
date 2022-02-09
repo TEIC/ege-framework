@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.psnc.dl.ege</groupId>
   <artifactId>ege-framework</artifactId>
-  <version>0.4</version>
+  <version>0.5</version>
   <name>EGE Framework</name>
   <properties>
 
@@ -14,8 +14,8 @@
     <project.reporting.outputEncoding>
       UTF-8
     </project.reporting.outputEncoding>
-  	<maven.compiler.source>1.8</maven.compiler.source>
- 	<maven.compiler.target>1.8</maven.compiler.target>
+  	<maven.compiler.source>11</maven.compiler.source>
+ 	<maven.compiler.target>11</maven.compiler.target>
   </properties>
 
 
@@ -95,33 +95,29 @@
       <organization>Paderborn University</organization>
     </developer>
   </developers>
-  <reporting>
+  <!--<reporting>
     <plugins>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.8.1</version>
             <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
+                <source>11</source>
+                <target>11</target>
             </configuration>
         </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jxr-plugin</artifactId><version>2.3</version>
+        <artifactId>maven-jxr-plugin</artifactId><version>3.1.1</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId><version>2.9</version>
+        <artifactId>maven-javadoc-plugin</artifactId><version>3.3.1</version>
       </plugin>
-      <!-- <plugin>
-			<groupId>org.codehaus.mojo</groupId>
-			<artifactId>findbugs-maven-plugin</artifactId>
-			<version>2.0.1</version>
-		</plugin> -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.1.2</version>
         <reportSets>
           <reportSet>
             <reports>
@@ -134,36 +130,30 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
-        <version>2.3</version>
+        <version>3.15.0</version>
         <configuration>
           <targetJdk>1.5</targetJdk>
         </configuration>
       </plugin>
     </plugins>
-  </reporting>
+  </reporting>-->
   <dependencies>
     <dependency>
       <groupId>pl.psnc.dl.ege</groupId>
       <artifactId>ege-api</artifactId>
-      <version>0.3.0</version>
+      <version>0.4.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.12</version>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.17.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>commons-io</groupId>
       <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
-      <scope>compile</scope>
+      <version>2.11.0</version>
     </dependency>
     <dependency>
       <groupId>net.sf.jpf</groupId>
@@ -171,11 +161,11 @@
       <version>1.5</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
+   <dependency>
       <groupId>net.sf.jpf</groupId>
       <artifactId>jpf-tools</artifactId>
       <version>1.5.1</version>
-    </dependency> 
+    </dependency>
     <dependency>
       <groupId>net.sf.jpf</groupId>
       <artifactId>jpf-boot</artifactId>
@@ -185,37 +175,37 @@
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-algorithms</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-visualization</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-api</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-graph-impl</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-io</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>net.sf.jung</groupId>
       <artifactId>jung-samples</artifactId>
-      <version>2.0.1</version>
+      <version>2.1.1</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -238,7 +228,7 @@
 	</repositories>   
 <distributionManagement>
    <repository>
-     <id>github</id>
+     <id>githubtei</id>
      <name>GitHub TEIC Apache Maven Packages</name>
      <url>https://maven.pkg.github.com/teic/ege-framework</url>
    </repository>
