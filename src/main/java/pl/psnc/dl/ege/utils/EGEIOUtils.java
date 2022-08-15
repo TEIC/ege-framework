@@ -17,7 +17,8 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 import java.util.zip.CRC32;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * Pack of usable EGE IO utilities.
@@ -28,7 +29,7 @@ import org.apache.log4j.Logger;
  */
 public final class EGEIOUtils {
 
-	private static final Logger LOGGER = Logger.getLogger(EGEIOUtils.class);
+	private static final Logger LOGGER = LogManager.getLogger(EGEIOUtils.class);
 
 	private EGEIOUtils() {
 	}

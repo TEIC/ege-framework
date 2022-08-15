@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.apache.commons.io.FileCleaningTracker;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import pl.psnc.dl.ege.EGEImpl;
 
@@ -40,7 +41,7 @@ import pl.psnc.dl.ege.EGEImpl;
 public class DataBuffer
 {
 
-	private static final Logger LOGGER = Logger.getLogger(DataBuffer.class);
+	private static final Logger LOGGER = LogManager.getLogger(DataBuffer.class);
 
 	/**
 	 * Default value : max size of item (in number of bytes), that allows to keep it in memory.

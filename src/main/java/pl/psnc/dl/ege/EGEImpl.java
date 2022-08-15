@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,10 +17,13 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.Collections;
 
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
+import org.apache.logging.log4j.core.config.DefaultConfiguration;
+import org.apache.logging.log4j.core.config.xml.XmlConfigurationFactory;
+import org.apache.logging.log4j.core.config.ConfigurationFactory;
 
 import pl.psnc.dl.ege.component.Converter;
 import pl.psnc.dl.ege.component.Customization;
@@ -46,22 +50,24 @@ public class EGEImpl
 
 	public final static int BUFFER_SIZE = 131072;
 
-	private static final Logger LOGGER = Logger.getLogger(EGEImpl.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(EGEImpl.class.getName());
 
 	static {
 		try {
 			String pathToProps = EGEConstants.OXGAPP + "log4j.xml";
 			File conf = new File(pathToProps);
-			if (conf.exists())
-				DOMConfigurator.configure(pathToProps);
+			if (conf.exists()) {
+				ConfigurationFactory.setConfigurationFactory(new XmlConfigurationFactory());
+				Configurator.reconfigure(new URI("pathToProps"));
+			}
 			else {
-				BasicConfigurator.configure();
-				Logger.getRootLogger().setLevel(Level.ERROR);
+				Configurator.initialize(new DefaultConfiguration());
+				Configurator.setRootLevel(Level.ERROR);
 			}
 		}
 		catch (Exception e1) {
-			BasicConfigurator.configure();
-			Logger.getRootLogger().setLevel(Level.ERROR);
+			Configurator.initialize(new DefaultConfiguration());
+			Configurator.setRootLevel(Level.ERROR);
 		}
 	}
 

@@ -27,7 +27,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.Attributes;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.java.plugin.JpfException;
 import org.java.plugin.ObjectFactory;
 import org.java.plugin.PluginClassLoader;
@@ -70,7 +71,7 @@ public class EGEConfigurationManager
 
 	private DocumentBuilder documentBuilder;
 
-	private final static Logger LOGGER = Logger.getLogger(EGEConfigurationManager.class.getName());
+	private final static Logger LOGGER = LogManager.getLogger(EGEConfigurationManager.class.getName());
 	
 	private final IOResolver ioResolver;
 	
@@ -131,6 +132,7 @@ public class EGEConfigurationManager
 				try {
 					String pluginDirectory = getDirectoryName(location,
 						"plugin" + counter);
+					System.out.println("Location and PluginDirectory " + location + " " + pluginDirectory);
 					File directory = unpackZIP(location, pluginDirectory);
 					if (directory == null) {
 						continue;

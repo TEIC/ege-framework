@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Properties;
 import java.io.FileInputStream;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /*
  * Additional useful static data.
@@ -18,7 +19,7 @@ public final class  EGEConstants {
         public static final Properties oxgProps = new Properties();
         static String whereami = EGEConstants.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         static String PATH = whereami.substring(0, whereami.lastIndexOf(File.separator));
-	private final static Logger LOGGER = Logger.getLogger(EGEConfigurationManager.class.getName());
+	private final static Logger LOGGER = LogManager.getLogger(EGEConfigurationManager.class.getName());
 	    
         static {
             try {

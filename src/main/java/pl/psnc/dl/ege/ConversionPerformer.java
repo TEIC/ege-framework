@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import pl.psnc.dl.ege.exception.ConverterException;
 import pl.psnc.dl.ege.types.ConversionAction;
@@ -24,7 +25,7 @@ class ConversionPerformer
 
 	private final ExceptionListener el;
 
-	private static final Logger LOGGER = Logger
+	private static final Logger LOGGER = LogManager
 			.getLogger(ConversionPerformer.class);
 
 
