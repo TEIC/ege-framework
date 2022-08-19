@@ -56,13 +56,18 @@ public class EGEImpl
 		try {
 			String pathToProps = EGEConstants.OXGAPP + "log4j.xml";
 			File conf = new File(pathToProps);
+			LOGGER.debug("now trying to configure the logger");
 			if (conf.exists()) {
+				LOGGER.debug("logger conf exists at " + pathToProps);
+				Configurator.setRootLevel(Level.DEBUG);
 				ConfigurationFactory.setConfigurationFactory(new XmlConfigurationFactory());
-				Configurator.reconfigure(new URI("pathToProps"));
+				Configurator.reconfigure(new URI(pathToProps));
+
 			}
 			else {
 				Configurator.initialize(new DefaultConfiguration());
 				Configurator.setRootLevel(Level.ERROR);
+				LOGGER.error("logger conf does not exist");
 			}
 		}
 		catch (Exception e1) {
