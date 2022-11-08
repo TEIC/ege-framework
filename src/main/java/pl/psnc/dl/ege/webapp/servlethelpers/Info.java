@@ -17,10 +17,12 @@ import java.io.PrintWriter;
 import java.util.Properties;
 
 public class Info extends HttpServlet {
+    HttpServlet servlet;
 
-    public void doGetHelper(HttpServletRequest request, HttpServletResponse response)
+    public void doGetHelper(HttpServletRequest request, HttpServletResponse response, HttpServlet httpservlet)
             throws IOException, ServletException {
-        String serverInfo = getServletContext().getServerInfo();
+        servlet = httpservlet;
+        String serverInfo = servlet.getServletContext().getServerInfo();
         try {
             //create info json object
             JSONObject json_info = new JSONObject();
@@ -66,7 +68,7 @@ public class Info extends HttpServlet {
 
         // fallback to using Java API
         if (version == null) {
-            Package aPackage = getClass().getPackage();
+            Package aPackage = servlet.getClass().getPackage();
             if (aPackage != null) {
                 version = aPackage.getImplementationVersion();
                 if (version == null) {
