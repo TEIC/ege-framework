@@ -27,8 +27,8 @@ public class Info extends HttpServlet {
             //create info json object
             JSONObject json_info = new JSONObject();
             json_info.put("webservice-version", getVersion(request));
-            json_info.put("server-version", serverInfo);
-            json_info.put("os-info", System.getProperty("os.name") + " " + System.getProperty("os.version"));
+            //json_info.put("server-version", serverInfo);
+            //json_info.put("os-info", System.getProperty("os.name") + " " + System.getProperty("os.version"));
             json_info.put("java-version", Runtime.version().toString());
             //resolve request and catch any errors
             RequestResolver rr = new InfoRequestResolver(request,
@@ -57,10 +57,14 @@ public class Info extends HttpServlet {
         // try to load from maven properties first
         try {
             Properties p = new Properties();
+            //to do: this needs to be done dynamically so the garage name doesn't matter
             InputStream is = request.getServletContext().getResourceAsStream("/META-INF/maven/pl.psnc.dl.ege.webapp/meigarage/pom.properties");
+            if (is == null){
+                is = request.getServletContext().getResourceAsStream("/META-INF/maven/pl.psnc.dl.ege.webapp/teigarage/pom.properties");
+            }
             if (is != null) {
                 p.load(is);
-                version = p.getProperty("version", "");
+                version = p.getProperty("version", "not found");
             }
         } catch (Exception e) {
             // ignore
