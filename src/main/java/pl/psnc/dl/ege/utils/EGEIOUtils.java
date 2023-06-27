@@ -57,19 +57,19 @@ public final class EGEIOUtils {
 
 		File[] files = file.listFiles();
 
-		for (int i = 0; i < files.length; i++) {
-			if (files[i].isDirectory()) {
-				constructZip(files[i], out, dir + files[i].getName() + "/");
+		for (File f : files) {
+			if (f.isDirectory()) {
+				constructZip(f, out, dir + f.getName() + "/");
 				continue;
 			}
 
 			// read file
 			try {
-				fi = new FileInputStream(files[i]);
+				fi = new FileInputStream(f);
 				origin = new BufferedInputStream(fi, BUFFER);
 
 				// create zip entry
-				ZipEntry entry = new ZipEntry(dir + files[i].getName());
+				ZipEntry entry = new ZipEntry(dir + f.getName());
 
 				// add entries to ZIP file
 				out.putNextEntry(entry);
@@ -275,6 +275,7 @@ public final class EGEIOUtils {
 			finally {
 			    dest.flush();
 			    dest.close();
+				fos.close();
 			}
 		}
 

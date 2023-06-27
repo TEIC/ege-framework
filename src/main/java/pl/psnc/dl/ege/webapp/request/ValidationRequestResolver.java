@@ -55,7 +55,7 @@ public class ValidationRequestResolver extends RequestResolver
 	private String[] resolveQueries()
 	{
 		String params = request.getRequestURL().toString();
-		params = (params.endsWith(SLASH) ? params : params + SLASH);
+		params = params.endsWith(SLASH) ? params : params + SLASH;
 		params = params.substring(params.indexOf(SLICE_BASE),
 			params.length());
 		String[] queries = params.split(SLASH);

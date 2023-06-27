@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedHashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -60,7 +59,7 @@ import pl.psnc.dl.ege.utils.ZipIOResolver;
  * 
  * @author mariuszs
  */
-public class EGEConfigurationManager
+public final class EGEConfigurationManager
 {
 	
 	private final static String EXTENSION_POINT_ID = "pl.psnc.dl.ege.root";
@@ -121,7 +120,7 @@ public class EGEConfigurationManager
 			int counter = 0;
 			while (locs.hasMoreElements()) {
 				final URL location = locs.nextElement();
-				String matchString = "^(jar:[a-zA-Z][a-zA-Z0-9\\+\\-\\.]*:.*\\!/).*plugin.xml.*{1}$";
+				String matchString = "^(jar:[a-zA-Z][a-zA-Z0-9\\+\\-\\.]*:.*\\!/).*plugin.xml.*\\{1\\}$";
 				Pattern pattern = Pattern.compile(matchString);
 				Matcher matcher = pattern.matcher(location.toExternalForm());
 				LOGGER.debug("Found : " + location.toExternalForm());
@@ -132,7 +131,7 @@ public class EGEConfigurationManager
 				try {
 					String pluginDirectory = getDirectoryName(location,
 						"plugin" + counter);
-					System.out.println("Location and PluginDirectory " + location + " " + pluginDirectory);
+					LOGGER.debug("Location and PluginDirectory " + location + " " + pluginDirectory);
 					File directory = unpackZIP(location, pluginDirectory);
 					if (directory == null) {
 						continue;
@@ -389,13 +388,11 @@ public class EGEConfigurationManager
 	{
 		List<PluginWrapper> plugins = new ArrayList();
 		List<Extension> extensions = new ArrayList(ep.getConnectedExtensions());		
-		if(ep.getId().equals("XslConverter")) {
+		if(ep.getId().equals("XslConverter") && extensions.size() > 0) {
 			// search for all plugin.xml files in stylesheets and add the extensions
-			if(extensions.size() > 0)
 				getXslExtensions(extensions, ep);
 		}
-		for (Iterator iter = extensions.iterator(); iter.hasNext();) {
-			Extension element = (Extension) iter.next();
+		for (Extension element : extensions) {
 			try {
 				pluginManager.activatePlugin(element
 						.getDeclaringPluginDescriptor().getId());
@@ -465,7 +462,6 @@ public class EGEConfigurationManager
     				List<Properties> props = handler.getProperties();
 				List<String> ids = handler.getIds();
 				Properties params = null;
-
 				for(int i = 0; i<props.size(); i++) {
 					MockExtension mockExtension = new MockExtension(ids.get(i), 
 									extensions.get(0).getDeclaringPluginDescriptor());			

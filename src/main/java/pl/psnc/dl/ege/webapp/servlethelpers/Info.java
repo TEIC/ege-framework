@@ -22,7 +22,7 @@ public class Info extends HttpServlet {
     public void doGetHelper(HttpServletRequest request, HttpServletResponse response, HttpServlet httpservlet)
             throws IOException, ServletException {
         servlet = httpservlet;
-        String serverInfo = servlet.getServletContext().getServerInfo();
+        //String serverInfo = servlet.getServletContext().getServerInfo();
         try {
             //create info json object
             JSONObject json_info = new JSONObject();
@@ -66,6 +66,7 @@ public class Info extends HttpServlet {
                 p.load(is);
                 version = p.getProperty("version", "not found");
             }
+            is.close();
         } catch (Exception e) {
             // ignore
         }
@@ -105,6 +106,7 @@ public class Info extends HttpServlet {
             }
             response.setContentType("application/json");
             out.println(json_info);
+            out.close();
         }
         catch (IOException ex) {
             throw new ServletException(ex);

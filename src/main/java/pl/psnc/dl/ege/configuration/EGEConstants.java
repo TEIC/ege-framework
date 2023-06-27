@@ -1,8 +1,6 @@
 package pl.psnc.dl.ege.configuration;
 
 import java.io.File;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 import java.io.FileInputStream;
 import org.apache.logging.log4j.Logger;
@@ -23,8 +21,8 @@ public final class  EGEConstants {
 	    
         static {
             try {
-                System.out.println(PATH);
-		oxgProps.load(new FileInputStream(PATH + File.separator + "oxgarage.properties"));
+                LOGGER.debug(PATH);
+				oxgProps.load(new FileInputStream(PATH + File.separator + "oxgarage.properties"));
 	    } catch (java.io.IOException e) {
                 try {
                     oxgProps.load(new FileInputStream(PATH + File.separator + "oxgarage.properties"));
@@ -69,13 +67,13 @@ public final class  EGEConstants {
 	public static final String BUFFER_TEMP_PATH = TEMP_PATH + File.separator + "buff";
 
 	static {
-	    boolean success = (new File(BUFFER_TEMP_PATH)).mkdirs();
+	    boolean success = new File(BUFFER_TEMP_PATH).mkdirs();
 	    if (!success) {
 			LOGGER.error("Could not create dir " + BUFFER_TEMP_PATH);
 	    }
 	}
 	static {
-	    boolean success = (new File(EGE_EXT_DIRECTORY)).mkdirs();
+	    boolean success = new File(EGE_EXT_DIRECTORY).mkdirs();
 	    if (!success) {
 			LOGGER.error("Could not create dir " + EGE_EXT_DIRECTORY);
 	    }

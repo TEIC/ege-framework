@@ -49,10 +49,6 @@ public class Conversion {
 
 	private static final String EZP_EXT = ".ezp";
 
-	private static final String FORMAT_DOCX = "docx";
-
-	private static final String FORMAT_ODT = "oo";
-
 	private static final String APPLICATION_MSWORD = "application/msword";
 
 	private static final String APPLICATION_EPUB = "application/epub+zip";
@@ -136,7 +132,7 @@ public class Conversion {
 		StringBuffer pathopt = new StringBuffer();
 		String baseprefix = rr.getRequest().getScheme() + "://" +
 				rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 ||  rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort())  +
-				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
+				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().endsWith(
 				RequestResolver.SLASH) ? "" : "/");
 		resp.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		resp.append("<conversions-paths xmlns:xlink=\"http://www.w3.org/1999/xlink\"  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" +
@@ -172,7 +168,7 @@ public class Conversion {
 				if (paramsDefs.length() > 0) {
 					Properties props = new Properties();
 					props.loadFromXML(new ByteArrayInputStream(paramsDefs.getBytes("UTF-8")));
-					Set<Object> keySet = new TreeSet(props.keySet());
+					Set<Object> keySet = new TreeSet<Object>(props.keySet());
 					for (Object key : keySet) {
 						if (!key.toString().endsWith(".type")) {
 							pathopt.append("<property id=\"" + key
@@ -216,7 +212,7 @@ public class Conversion {
         try {
 		String baseprefix = rr.getRequest().getScheme() + "://" +
 				rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 ||  rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort()) +
-				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
+				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().endsWith(
 				RequestResolver.SLASH) ? "" : "/");
             String prefix = rr.getRequest().getRequestURL().toString()
                     + (rr.getRequest().getRequestURL().toString().endsWith(SLASH) ? ""
@@ -276,7 +272,7 @@ public class Conversion {
         InputStream is = null;
         String fname;
         for (ConversionsPath path : cp) {
-            if ((pathFrame.size() - 1) != path.getPath().size()) {
+            if (pathFrame.size() - 1 != path.getPath().size()) {
                 continue;
             }
             found = true;
@@ -366,7 +362,7 @@ public class Conversion {
                            ConversionRequestResolver rr,
                            EGE ege,
                            ConversionsPath cpath,
-                           InputStream ins,
+                           InputStream instr,
                            String fname,
                            FileItemIterator iter,
                            File buffDir)
@@ -411,7 +407,7 @@ public class Conversion {
 			       + File.separator + newTemp + EZP_EXT);
 	    fos = new FileOutputStream(zipFile);
 	    ior.compressData(buffDir, fos);
-	    ins = new FileInputStream(zipFile);
+        InputStream ins = new FileInputStream(zipFile);
 	    File szipFile = new File(EGEConstants.BUFFER_TEMP_PATH
 				     + File.separator + newTemp + ZIP_EXT);
 	    fos = new FileOutputStream(szipFile);

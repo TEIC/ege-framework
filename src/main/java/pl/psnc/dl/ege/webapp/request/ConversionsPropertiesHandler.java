@@ -69,7 +69,7 @@ public class ConversionsPropertiesHandler
 		throws SAXException
 	{
 		if (localName.equals("conversion")) {
-			currentIndex = Integer.parseInt((attributes.getValue("index")));
+			currentIndex = Integer.parseInt(attributes.getValue("index"));
 			Map<String,String> props = properties.get(currentIndex);
 			if(props!=null){
 				throw new SAXException("Error reading properties: vertices with same index ("+currentIndex+") found!");

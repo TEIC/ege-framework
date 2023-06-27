@@ -75,7 +75,7 @@ public class Customization {
             }
             String baseprefix = rr.getRequest().getScheme() + "://" +
                     rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 ||  rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort())  +
-                    rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
+                    rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().endsWith(
                     RequestResolver.SLASH) ? "" : "/");
             out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             out.println("<customizations xmlns:xlink=\"http://www.w3.org/1999/xlink\"  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" +
@@ -102,6 +102,7 @@ public class Customization {
                 out.println("</customization-setting>");
             }
             out.println("</customizations>");
+            out.close();
         } catch (IOException ex) {
             throw new ServletException(ex);
         }
@@ -194,7 +195,7 @@ public class Customization {
             localCustomizationFile = fields.get("customization");
 
         String filename = (usedCustomization.startsWith("c-") ? usedCustomization.substring(2) : usedCustomization);
-        if (usedCustomization == "c-mei-local") {
+        if (usedCustomization.equals("c-mei-local")) {
             try {
                 filename = ((File) fields.get("customization")).getName();
             } catch (Exception e) {

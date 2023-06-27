@@ -16,7 +16,6 @@ import pl.psnc.dl.ege.webapp.request.RequestResolvingException;
 import pl.psnc.dl.ege.webapp.request.ValidationRequestResolver;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -82,7 +81,7 @@ public class Validation
 						RequestResolver.SLASH) ? "" : "/");
 			String baseprefix = rr.getRequest().getScheme() + "://" +
 					rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 || rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort())  +
-					rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
+					rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().endsWith(
 					RequestResolver.SLASH) ? "" : "/");
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<validations xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" + 	baseprefix
@@ -93,6 +92,7 @@ public class Validation
 						+ "/\" />");
 			}
 			out.println("</validations>");
+			out.close();
 		}
 		catch (IOException ex) {
 			throw new ServletException(ex);
@@ -175,12 +175,12 @@ public class Validation
 	public void printValidationResult(HttpServletResponse response, ValidationResult result, RequestResolver rr) throws IOException{
 		response.setContentType("text/xml;charset=utf-8");
 		PrintWriter out = response.getWriter();
-		String prefix = rr.getRequest().getRequestURL().toString()
-				+ (rr.getRequest().getRequestURL().toString().endsWith(
-				RequestResolver.SLASH) ? "" : "/");
+		//String prefix = rr.getRequest().getRequestURL().toString()
+		//		+ (rr.getRequest().getRequestURL().toString().endsWith(
+		//		RequestResolver.SLASH) ? "" : "/");
 		String baseprefix = rr.getRequest().getScheme() + "://" +
 				rr.getRequest().getServerName() + ((rr.getRequest().getServerPort() == 80 ||  rr.getRequest().getServerPort() == 443) ? "" : ":" + rr.getRequest().getServerPort())  +
-				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().toString().endsWith(
+				rr.getRequest().getContextPath() + (rr.getRequest().getContextPath().endsWith(
 				RequestResolver.SLASH) ? "" : "/");
 		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		out.println("<validation-result xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"" + baseprefix
@@ -188,13 +188,12 @@ public class Validation
 		out.println("<status>" + result.getStatus()
 				+ "</status>");
 		out.println("<messages>");
-		int i = 1;
 		for (String msg : result.getMessages()) {
 			out.println("<message><![CDATA[" + msg + "]]></message>");
-			i++;
 		}
 		out.println("</messages>");
 		out.println("</validation-result>");
+		out.close();
 	}
 	
 

@@ -14,6 +14,6 @@ public interface ExceptionListener {
 	 * 
 	 * @param ex received exception
 	 */
-	public void catchException(Exception ex);
+	void catchException(Exception ex);
 	
 }

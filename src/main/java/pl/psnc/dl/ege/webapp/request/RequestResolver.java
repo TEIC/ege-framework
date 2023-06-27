@@ -106,7 +106,7 @@ public abstract class RequestResolver
 	public DataType decodeDataType(String uriPart)
 	{
 		try {
-			String[] partial = (URLDecoder.decode(uriPart, "UTF-8"))
+			String[] partial = URLDecoder.decode(uriPart, "UTF-8")
 					.split(SPLITTER);
 			DataType dataType = null;
 			String mime = partial[1] + SLASH + partial[2];

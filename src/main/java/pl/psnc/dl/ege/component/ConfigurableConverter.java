@@ -27,6 +27,6 @@ public interface ConfigurableConverter extends Converter {
 	 * @param params converters parameters
 	 * @throws EGEException
 	 */
-	public void configure(Map<String,String> params) throws EGEException; 
+	void configure(Map<String,String> params) throws EGEException;
 	
 }

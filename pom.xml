@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.psnc.dl.ege</groupId>
   <artifactId>ege-framework</artifactId>
-  <version>0.5.2</version>
+  <version>0.5.3</version>
   <name>EGE Framework</name>
   <properties>
 
@@ -137,6 +137,42 @@
       </plugin>
     </plugins>
   </reporting>-->
+    <build>
+    <plugins>
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+            <failOnViolation>false</failOnViolation>
+            <printFailingErrors>true</printFailingErrors>
+            <linkXRef>false</linkXRef>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>compile</phase>
+            <goals>
+              <goal>
+check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    <plugin>
+      <groupId>org.owasp</groupId>
+      <artifactId>dependency-check-maven</artifactId>
+      <version>8.2.1</version>
+      <executions>
+          <execution>
+              <phase>compile</phase>
+              <goals>
+                  <goal>check</goal>
+              </goals>
+          </execution>
+      </executions>
+    </plugin>
+    </plugins>
+  </build>
   <dependencies>
     <dependency>
       <groupId>pl.psnc.dl.ege</groupId>

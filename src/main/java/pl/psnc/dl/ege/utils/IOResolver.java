@@ -24,7 +24,7 @@ public interface IOResolver {
 	 * @param dir
 	 * @throws IOException
 	 */
-	public void decompressStream(InputStream is, File dir) throws IOException;
+	void decompressStream(InputStream is, File dir) throws IOException;
 	
 	/**
 	 * Method should be responsible for compressing output data received from any of
@@ -34,6 +34,6 @@ public interface IOResolver {
 	 * @return
 	 * @throws IOException
 	 */
-	public void compressData(File dir, OutputStream os) throws IOException;
+	void compressData(File dir, OutputStream os) throws IOException;
 	
 }

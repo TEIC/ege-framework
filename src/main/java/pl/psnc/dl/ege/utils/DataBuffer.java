@@ -325,11 +325,9 @@ public class DataBuffer
 		 */
 		public void deleteFile()
 		{
-			if (!os.isInMemory()) {
-				if (os.getFile().exists()) {
+			if (!os.isInMemory() && os.getFile().exists()) {
 					LOGGER.debug("Removing tmp file : " + os.getFile());
 					os.getFile().delete();
-				}
 			}
 		}
 		
