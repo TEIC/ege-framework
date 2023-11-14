@@ -174,6 +174,9 @@ public class Validation
 	
 	public void printValidationResult(HttpServletResponse response, ValidationResult result, RequestResolver rr) throws IOException{
 		response.setContentType("text/xml;charset=utf-8");
+		String fname = rr.getRequest().getParameter("filename");
+		String fileextension = "_validation.xml";
+		response.setHeader("Content-Disposition", "attachment;filename=\"" + fname + fileextension + "\"");
 		PrintWriter out = response.getWriter();
 		//String prefix = rr.getRequest().getRequestURL().toString()
 		//		+ (rr.getRequest().getRequestURL().toString().endsWith(
