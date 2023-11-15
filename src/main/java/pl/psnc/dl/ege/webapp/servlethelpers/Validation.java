@@ -137,6 +137,7 @@ public class Validation
 	{
 		EGE ege = new EGEImpl();
 		InputStream is = null;
+		String fname;
 		if (ServletFileUpload.isMultipartContent(rr.getRequest())) {
 			try {
 				ServletFileUpload upload = new ServletFileUpload();
@@ -145,9 +146,13 @@ public class Validation
 					FileItemStream item = iter.next();
 					if (!item.isFormField()) {
 						is = item.openStream();
+						int dotIndex = item.getName().lastIndexOf(".");
+						fname = null;
+						if (dotIndex == -1 || dotIndex == 0) fname = item.getName();
+						else fname = item.getName().substring(0, dotIndex);
 						//perform validation and print result to response.
 						ValidationResult result = ege.performValidation(is, dt);
-						printValidationResult(response,result, rr);
+						printValidationResult(response,result, rr, fname);
 						is.close();
 					}
 				}
@@ -172,9 +177,8 @@ public class Validation
 		}
 	}
 	
-	public void printValidationResult(HttpServletResponse response, ValidationResult result, RequestResolver rr) throws IOException{
+	public void printValidationResult(HttpServletResponse response, ValidationResult result, RequestResolver rr, String fname) throws IOException{
 		response.setContentType("text/xml;charset=utf-8");
-		String fname = rr.getRequest().getParameter("filename");
 		String fileextension = "_validation.xml";
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + fname + fileextension + "\"");
 		PrintWriter out = response.getWriter();

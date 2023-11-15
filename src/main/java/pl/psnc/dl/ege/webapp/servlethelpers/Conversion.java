@@ -315,7 +315,7 @@ public class Conversion {
                             ValidationResult vRes = ege.performValidation(ins, cpath.getInputDataType());
                             if (vRes.getStatus().equals(ValidationResult.Status.FATAL)) {
                                 Validation valServ = new Validation();
-					valServ.printValidationResult(response, vRes, rr);
+					valServ.printValidationResult(response, vRes, rr, fname);
                                 try {
                                     ins.close();
                                 } finally {
