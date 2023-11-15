@@ -120,7 +120,7 @@ public final class EGEConfigurationManager
 			int counter = 0;
 			while (locs.hasMoreElements()) {
 				final URL location = locs.nextElement();
-				String matchString = "^(jar:[a-zA-Z][a-zA-Z0-9\\+\\-\\.]*:.*\\!/).*plugin.xml.*\\{1\\}$";
+				String matchString = "^(jar:[a-zA-Z][a-zA-Z0-9\\+\\-\\.]*:.*\\!/).*plugin.xml.*{1}$";
 				Pattern pattern = Pattern.compile(matchString);
 				Matcher matcher = pattern.matcher(location.toExternalForm());
 				LOGGER.debug("Found : " + location.toExternalForm());
