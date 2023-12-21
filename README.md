@@ -1,4 +1,6 @@
-# TEIGarage/MEIGarage
+# ege-framework [![DOI](https://zenodo.org/badge/372424108.svg)](https://zenodo.org/doi/10.5281/zenodo.10419401)
+
+## TEIGarage/MEIGarage
 
 This repository is a dependency used in the [TEIGarage](https://github.com/TEIC/TEIGarage) and/or [MEIGarage](https://github.com/Edirom/MEIGarage) project which are based on the proven [OxGarage](https://github.com/TEIC/oxgarage). 
 

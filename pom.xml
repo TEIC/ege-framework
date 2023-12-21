@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>pl.psnc.dl.ege</groupId>
   <artifactId>ege-framework</artifactId>
-  <version>0.5.3</version>
+  <version>0.5.4</version>
   <name>EGE Framework</name>
   <properties>
 
