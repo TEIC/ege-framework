@@ -83,6 +83,7 @@ public class Conversion {
      * of possible conversions paths.
      */
     public static void doGetHelper(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         try {
             RequestResolver rr = new ConversionRequestResolver(request,
                     Method.GET);
@@ -238,6 +239,7 @@ public class Conversion {
     public static void doPostHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath());
         try {
             ConversionRequestResolver rr = new ConversionRequestResolver(
                     request, Method.POST);

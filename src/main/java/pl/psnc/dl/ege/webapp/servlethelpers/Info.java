@@ -1,7 +1,12 @@
 package pl.psnc.dl.ege.webapp.servlethelpers;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import pl.psnc.dl.ege.EGE;
+import pl.psnc.dl.ege.EGEImpl;
+import pl.psnc.dl.ege.configuration.EGEConstants;
 import pl.psnc.dl.ege.webapp.request.InfoRequestResolver;
 import pl.psnc.dl.ege.webapp.request.Method;
 import pl.psnc.dl.ege.webapp.request.RequestResolver;
@@ -11,16 +16,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
+
 
 public class Info extends HttpServlet {
     HttpServlet servlet;
+    private static final Logger LOGGER = LogManager
+            .getLogger(Info.class);
 
     public void doGetHelper(HttpServletRequest request, HttpServletResponse response, HttpServlet httpservlet)
             throws IOException, ServletException {
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         servlet = httpservlet;
         //String serverInfo = servlet.getServletContext().getServerInfo();
         try {
@@ -30,10 +43,22 @@ public class Info extends HttpServlet {
             //json_info.put("server-version", serverInfo);
             //json_info.put("os-info", System.getProperty("os.name") + " " + System.getProperty("os.version"));
             json_info.put("java-version", Runtime.version().toString());
+            EGE ege = new EGEImpl();
+            //get info from each converter
+            //add info which sources are used /usr/share/xml/tei/odd/VERSION
+            //TEIROOT default is /usr/share/xml/tei/
+            String versionodd = Files.readString(Paths.get(EGEConstants.TEIROOT + "odd/VERSION"), StandardCharsets.UTF_8);
+            String versionstylesheets = Files.readString(Paths.get(EGEConstants.TEIROOT + "stylesheet/VERSION"), StandardCharsets.UTF_8);
+            json_info.put("tei-odd-version", versionodd);
+            json_info.put("tei-stylesheet-version", versionstylesheets);
+            //add info which MEI sources are used
+            //To do: /usr/share/xml/mei/music-encoding/mei401...
             //resolve request and catch any errors
             RequestResolver rr = new InfoRequestResolver(request,
                     Method.GET);
             //print available info
+            //EGE ege = new EGEImpl();
+            //List<ConversionsPath> paths = ege.findConversionPaths(idt);
             printInfo(response, rr, json_info);
         }
         catch (RequestResolvingException ex) {

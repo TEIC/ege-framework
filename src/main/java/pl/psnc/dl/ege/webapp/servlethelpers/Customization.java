@@ -40,7 +40,7 @@ public class Customization {
     public void doGetHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         try {
             //resolve request and catch any errors
             RequestResolver rr = new CustomizationRequestResolver(request,
@@ -112,6 +112,7 @@ public class Customization {
     public void doPostHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
+            LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath());
         try {
             RequestResolver rr = new CustomizationRequestResolver(request,
                     Method.POST);
@@ -141,7 +142,7 @@ public class Customization {
         String usedCustomization = csString[2];
         String usedOutputFormat = csString[3];
 
-        LOGGER.warn("performCustomization(usedCS: " + usedCS
+        LOGGER.debug("performCustomization(usedCS: " + usedCS
                 + ", usedSource" + usedSource
                 + ", usedCustomization" + usedCustomization
                 + ", usedOutputFormat" + usedOutputFormat + ")");
@@ -211,7 +212,7 @@ public class Customization {
             fileextension = ".xml";
         }
         response.setHeader("Content-Disposition", "attachment;filename=\"" + filename + fileextension + "\"");
-        LOGGER.warn("Going to perform customization");
+        LOGGER.debug("Going to perform customization");
 
         ((EGEImpl) ege).performCustomization(cs, source, customization,
                 usedOutputFormat, response.getOutputStream(),

@@ -42,7 +42,8 @@ public final class  EGEConstants {
         public static final String TEIROOT = oxgProps.getProperty("TEI","/usr/share/xml/tei/");
         public static final String OpenOfficeConfig = oxgProps.getProperty("OpenOfficeConfig","/usr/lib/libreoffice/");
         public static final String DEFAULT_LOCALE = oxgProps.getProperty("defaultLocale","en"); 
-        public static final String DEFAULT_PROFILE = oxgProps.getProperty("defaultProfile","default"); 	
+        public static final String DEFAULT_PROFILE = oxgProps.getProperty("defaultProfile","default");
+		public static final String MEIROOT = oxgProps.getProperty("MEI","/usr/share/xml/mei/");
 	// name for document family consisting of text documents
 	public static final String TEXTFAMILY = "Documents";
 	public static final String TEXTFAMILYCODE = "text";
