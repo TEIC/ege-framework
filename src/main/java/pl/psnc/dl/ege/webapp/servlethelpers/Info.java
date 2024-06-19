@@ -47,12 +47,32 @@ public class Info extends HttpServlet {
             //get info from each converter
             //add info which sources are used /usr/share/xml/tei/odd/VERSION
             //TEIROOT default is /usr/share/xml/tei/
-            String versionodd = Files.readString(Paths.get(EGEConstants.TEIROOT + "odd/VERSION"), StandardCharsets.UTF_8);
-            String versionstylesheets = Files.readString(Paths.get(EGEConstants.TEIROOT + "stylesheet/VERSION"), StandardCharsets.UTF_8);
-            json_info.put("tei-odd-version", versionodd);
-            json_info.put("tei-stylesheet-version", versionstylesheets);
-            //add info which MEI sources are used
-            //To do: /usr/share/xml/mei/music-encoding/mei401...
+            if(new File(EGEConstants.TEIROOT + "odd/VERSION").isFile()){
+                String versionodd = Files.readString(Paths.get(EGEConstants.TEIROOT + "odd/VERSION"), StandardCharsets.UTF_8);
+                if (!(versionodd == null)) {
+                    json_info.put("tei-odd-version", versionodd.replaceAll("\\n", ""));
+                }
+            }
+            if(new File(EGEConstants.TEIROOT + "stylesheet/VERSION").isFile()){
+                String versionstylesheets = Files.readString(Paths.get(EGEConstants.TEIROOT + "stylesheet/VERSION"), StandardCharsets.UTF_8);
+                if (!(versionstylesheets == null)) {
+                    json_info.put("tei-stylesheet-version", versionstylesheets.replaceAll("\\n", ""));
+                }
+            }
+            //add info which MEI de version is used
+            //music-encoding/meidev/GITHASH
+            if(new File(EGEConstants.MEIROOT + "music-encoding/meidev/GITHASH").isFile()){
+                String versionmeidev = Files.readString(Paths.get(EGEConstants.MEIROOT + "music-encoding/meidev/GITHASH"), StandardCharsets.UTF_8);
+                if (!(versionmeidev == null)){
+                    json_info.put("mei-dev-githash", versionmeidev.replaceAll("\\n", ""));
+                }
+            }
+            if(new File(EGEConstants.MEIROOT + "music-stylesheets/encoding-tools/GITHASH").isFile()){
+                String versionmeitools = Files.readString(Paths.get(EGEConstants.MEIROOT + "music-stylesheets/encoding-tools/GITHASH"), StandardCharsets.UTF_8);
+                if (!(versionmeitools == null)){
+                    json_info.put("mei-encoding-tools-githash", versionmeitools.replaceAll("\\n", ""));
+                }
+            }
             //resolve request and catch any errors
             RequestResolver rr = new InfoRequestResolver(request,
                     Method.GET);
@@ -71,6 +91,9 @@ public class Info extends HttpServlet {
                 throw new ServletException(ex);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
 
