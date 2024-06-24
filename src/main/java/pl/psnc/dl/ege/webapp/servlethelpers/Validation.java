@@ -40,7 +40,6 @@ public class Validation
 					  HttpServletResponse response)
 		throws ServletException, IOException
 	{
-		LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
 		try {
 			//resolve request and catch any errors
 			RequestResolver rr = new ValidationRequestResolver(request,
@@ -58,6 +57,8 @@ public class Validation
 				throw new ServletException(ex);
 			}
 		}
+		LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
+
 	}
 
 

@@ -33,7 +33,6 @@ public class Info extends HttpServlet {
 
     public void doGetHelper(HttpServletRequest request, HttpServletResponse response, HttpServlet httpservlet)
             throws IOException, ServletException {
-        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         servlet = httpservlet;
         //String serverInfo = servlet.getServletContext().getServerInfo();
         try {
@@ -96,7 +95,7 @@ public class Info extends HttpServlet {
         catch (IOException e) {
             e.printStackTrace();
         }
-
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
     }
 
     public synchronized String getVersion(HttpServletRequest request) {

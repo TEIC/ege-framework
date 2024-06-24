@@ -40,14 +40,13 @@ public class Customization {
     public void doGetHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
-        try {
+         try {
             //resolve request and catch any errors
             RequestResolver rr = new CustomizationRequestResolver(request,
                     Method.GET);
             //print available validation options
             printAvailableCustomizationSettings(response, rr);
-        } catch (RequestResolvingException ex) {
+         } catch (RequestResolvingException ex) {
             if (ex.getStatus().equals(
                     RequestResolvingException.Status.WRONG_METHOD)) {
                 //TODO : something with "wrong" method message (and others)
@@ -56,6 +55,7 @@ public class Customization {
                 throw new ServletException(ex);
             }
         }
+         LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
     }
 
     /*
@@ -112,13 +112,12 @@ public class Customization {
     public void doPostHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-            LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath());
-        try {
+           try {
             RequestResolver rr = new CustomizationRequestResolver(request,
                     Method.POST);
             String[] cs = (String[]) rr.getData();
             performCustomization(cs, rr, response);
-        } catch (RequestResolvingException ex) {
+            } catch (RequestResolvingException ex) {
             if (ex.getStatus().equals(
                     RequestResolvingException.Status.BAD_REQUEST)) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -130,6 +129,7 @@ public class Customization {
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
     }
 
     /*

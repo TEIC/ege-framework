@@ -83,7 +83,6 @@ public class Conversion {
      * of possible conversions paths.
      */
     public static void doGetHelper(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath() + " " + request.toString());
         try {
             RequestResolver rr = new ConversionRequestResolver(request,
                     Method.GET);
@@ -102,8 +101,7 @@ public class Conversion {
                 }
                 printConversionPossibilities(response, rr, inpfo);
             }
-
-        } catch (RequestResolvingException ex) {
+            } catch (RequestResolvingException ex) {
             if (ex.getStatus().equals(
                     RequestResolvingException.Status.WRONG_METHOD)) {
                 response.sendError(405, R_WRONG_METHOD);
@@ -111,8 +109,9 @@ public class Conversion {
                 throw new ServletException(ex);
             }
         }
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
 
-	}
+    }
 
 	/*
 	 * Send in response xml data of possible conversions paths.
@@ -239,13 +238,12 @@ public class Conversion {
     public static void doPostHelper(
             HttpServletRequest request,
             HttpServletResponse response) throws ServletException, IOException {
-        LOGGER.debug("REQUEST: " + request.getRequestURL() + " " + request.getContextPath());
         try {
             ConversionRequestResolver rr = new ConversionRequestResolver(
                     request, Method.POST);
             List<DataType> pathFrame = (List<DataType>) rr.getData();
             performConversion(response, rr, pathFrame);
-        } catch (RequestResolvingException ex) {
+            } catch (RequestResolvingException ex) {
             if (ex.getStatus().equals(
                     RequestResolvingException.Status.BAD_REQUEST)) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST);
@@ -258,6 +256,7 @@ public class Conversion {
         } catch (Exception ex) {
             throw new ServletException(ex);
         }
+        LOGGER.debug("REQUEST: " + request.getRequestURL() + "; " + request.getMethod() + "; " + response.getStatus());
     }
 
     /*
