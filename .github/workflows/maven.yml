@@ -30,7 +30,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: mvn -B package --file pom.xml
     - name: Upload Maven build artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: ege-framework-0.4.jar
         path: /home/runner/work/ege-framework/ege-framework/target/ege-framework-0.4.jar
